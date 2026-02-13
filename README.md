@@ -1,2 +1,16 @@
-# website
-180 Degrees Consulting ARSD is the official consulting and strategy society of Atma Ram Sanatan Dharma College, Delhi University, providing student-led management consulting, strategy projects, analytics, case competitions, and leadership training for careers in consulting, strategy, and corporate roles across DU and India.
+# 180 Degrees Consulting ARSD Website
+
+Official website for 180 Degrees Consulting ARSD.
+
+## Tech Stack
+- HTML
+- CSS
+- JavaScript
+- Hosted on Vercel
+
+## Deployment
+Production branch: main  
+Staging branch: develop
+
+## Version
+v1.0 – Initial launch
