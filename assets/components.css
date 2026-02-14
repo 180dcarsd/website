@@ -302,3 +302,16 @@ header {
         padding: 0 1.5rem; /* Reduce header padding so logo doesn't crush */
     }
 }
+
+*:focus {
+    outline: none;
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+a, button, input, select, textarea {
+    -webkit-tap-highlight-color: transparent;
+    
+}

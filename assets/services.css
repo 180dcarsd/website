@@ -81,16 +81,25 @@
     border-radius: 0.5rem;
     padding: 0.4rem 1rem;
 }
-.home3{
-     padding: 0rem 0 8rem 0;
-}
+
 
 @media (max-width:768px){
     .tags{
         flex-direction: column;
         
+
     }
 
+    .services-text h1{
+        font-size:1.5rem;
+        text-align:left;
+        line-height: 1.7rem;
+    }
+
+    .services-text h2{
+        text-align: left;
+        margin-top: 1rem;
+    }
     .home3{
         padding:0;
     }

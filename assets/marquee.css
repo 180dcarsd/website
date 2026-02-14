@@ -20,11 +20,10 @@
   box-sizing: border-box;
 }
 
-.marq-total{
-    height:35%;
-    position: absolute;
-
+.marq-total {
+  padding: 0rem 0 3rem;
 }
+
 
 .marq-total h2{
     text-align: center;
@@ -145,60 +144,59 @@
   }
 }
 
-.home2-wrap{
-  height:60%;
-  display:flex;
-  flex-direction:row;
-  justify-content: flex-end;
 
+.home2-wrap {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  gap: 2rem;
+  padding: 4rem clamp(2rem, 5vw, 6rem);
 }
 
-.div1{
-  width:60%;
-  height:100%;
-  padding:1rem 1rem 0rem 4rem;
+
+.div1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.div1 h1{
-  font-size: 3.5rem;
-  margin-bottom:1.8rem;
+.div1 h1 {
+  font-size: clamp(2.5rem, 3vw, 3.5rem);
 }
 
-.div1 span{
-  font-size:2rem;
-  margin-left:-0.5rem;
+.div1 span {
+  font-size: clamp(1.5rem, 2vw, 2rem);
 }
 
-.div1 p{
-  font-size: 1.1rem;
-  margin-top:-1.7rem;
-  line-height: 1.8rem;
+.div1 p {
+  font-size: 1rem;
+  max-width: 90%;
+  line-height: 1.6;
 }
 
-.div3{
-  height: 48%;
-  width:100%;
-  display:flex;
-  flex-direction: row;
-  gap:2.5%;
-  margin-top:1.5rem;
+.div3 {
+  display: grid;
+  grid-template-columns: 30% 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  height: 300px;
 }
 
-.div4{
-  width: 30%;
-  background-color: white;
-  height:100%;
-  border-radius:0.7rem;
-  position:relative;
+
+.div4,
+.div5 {
+  border-radius: 1rem;
   overflow: hidden;
+  position: relative;
 }
 
-.div4 img{
+.div4 img,
+.div5 img {
+  width: 100%;
   height: 100%;
-  width:100%;
   object-fit: cover;
-  
 }
+
 
 .div4 h1{
   margin: 0;
@@ -209,235 +207,158 @@
   margin: 0;
 }
 
-.year-text{
-  height:100%;
-  width:100%;
-  color:white;
-  position: absolute;
-  top:50%;
-  text-align: left;
+.div2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
 }
 
-.div5{
-  border-radius:0.7rem;
-  width:67.5%;
-  height: 100%;
-  background-color:black;
-  overflow: hidden;
-}
 
-.div5 img {
-  height:100%;
-  width: 100%;
-  object-fit: cover;
-}
-
-.div2{
-  width: 40%;
-  margin-top:5%;
-  height:90%;
-  display: flex;
-  gap:2.5%;
-  padding-top: 1rem;
- 
-}
-
-.div6, .div7{
-  width: 45%;
-  height:90%;
-  border-radius: 1rem;
+.div6,
+.div7 {
   display: flex;
   flex-direction: column;
-  gap:1rem;
+  gap: 1.5rem;
 }
 
-.div7{
-  display:flex;
-  
-}
-
-.div8{
-  
-  height: 30%;
-  width:100%;
-  background-color: white;
+.div8 {
+  height: 210px;
   border-radius: 1rem;
 }
 
-.div9{
-  
-  height: 60%;
-  width:100%;
+.div9,
+.div10 {
+  flex: 1;
+  border-radius: 1rem;
+  position: relative;
   background: linear-gradient(to bottom,#0e3e1b,black);
-  border-radius: 1rem;
-  position: relative;
 }
 
-.div10{
-  height: 60%;
-  width:100%;
-  position: relative;
-  border-radius: 1rem;
-  background: linear-gradient(to bottom, black,#0e3e1b);
+.year-text {
+  position: absolute;
+  inset: 0;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
 }
 
 
-.div10 .year-text{
-  text-align: left; padding:1rem 1.2rem; top:0%;
-}
-
-.div9 .year-text h4{
-  font-weight:400; margin:0; margin-top:-0.2rem; font-size:1.2rem;
-}
-
-.div10 .year-text h4{
-  font-weight:400; margin:0; font-size:1.2rem; padding-bottom: 1rem;
-}
-
-@media screen and (max-width: 1150px) {
-
-   .div1 h1{
-    font-size: 2.5rem;
-    margin-bottom: 2.5rem;
-   }
-
-   .div1 span{
-    font-size: 1.75rem;
-    margin-left:0;
-   }
-
-   .div1 p{
-    font-size:1.1rem;
-    line-height:1.3rem;
-
-   }
-    .home, .home2, .home3, .home4, .home6 {
+@media (max-width: 1000px) {
+.home, .home2, .home3, .home4, .home6 {
         position: relative !important; 
         height: auto !important;     
         min-height: 100vh;
         top: auto !important;
     }
 
-    .home5{
-      height:40rem;
-    }
 
-    .home2-wrap {
-        flex-direction: column;
-        height: auto;
-        padding: 2rem 1rem 0rem 1rem; 
-        margin-bottom:-3rem;
-    }
-
-    
-    .div1, .div2 {
-        width: 100% !important;
-        padding: 1rem !important;
-    }
-
-    .div3 {
-        flex-direction: column;
-        height: auto;
-        gap: 1.5rem;
-    }
-
-    .div4, .div5 {
-        width: 100% !important;
-        height: 300px;
-    }
-    /* 4. FIX STATS BOXES (div6 & div7) */
-    .div2 {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .div6, .div7 {
-        width: 100% !important;
-        height: auto !important;
-    }
-
-    .div9, .div10 {
-        height: 250px; /* Ensure the stat cards have height */
-    }
-
-      .year-text{
-    height:100%;
-    width:100%;
-    color:white;
-    position: absolute;
-    top:50%;
-
+  .home2-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding: 2rem 1.5rem;
   }
 
-    /* 5. FIX MARQUEE POSITIONING */
-    .marq-total {
-        position: relative; /* Don't pin it to the bottom of a huge column */
-        bottom: 0;
-        margin-top: 3rem;
-        height: auto;
-        padding-bottom: 2rem;
-    }
+  /* LEFT SECTION */
+  .div1 {
+    width: 100%;
+    padding: 0;
+  }
 
-    .div6, .div7 {
-        width: 100% !important;
-        height: auto !important; /* Let them grow with children */
-        display: flex !important;
-        flex-direction: column;
-        margin-bottom: 2rem;
-    }
+  .div1 h1 {
+    font-size: 2.3rem;
+    line-height: 1.2;
+  }
 
-    .div7{
-      flex-direction: column-reverse;
-    }
+  .div1 span {
+    font-size: 1.5rem;
+  }
 
-    /* 2. FIX THE WHITE BOXES (.div8) */
-    .div8 {
-        display: block !important; /* Ensure they aren't hidden */
-        height: 120px !important;  /* Give them a fixed height so they appear */
-        width: 100% !important;
-        background-color: white !important;
-        border-radius: 1rem;
-        visibility: visible !important;
-        opacity: 1 !important;
-    }
+  .div1 p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-top: 1rem;
+  }
 
-    /* 3. ENSURE THE STAT BOXES ATTACHED TO THEM ALSO SHOW */
-    .div9, .div10 {
-        height: auto !important;
-        min-height: 200px;
-        padding-bottom: 2rem;
-    }
+  /* IMAGE BLOCK */
+  .div3 {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    height: auto;
+  }
 
-    .div10 .year-text p{
-      margin-top:0.7rem;
-    }
+  .div4,
+  .div5 {
+    width: 100%;
+    height: 260px;
+  }
 
+  /* RIGHT SECTION */
+  .div2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 
-    .div10{
-      height:65%;
-      background: linear-gradient(to bottom,#0e3e1b,black);
-      
-    }
+  .div6,
+  .div7 {
+    width: 100%;
+    gap: 1.2rem;
+  }
 
-    .div2{
-      margin-top:-0.9rem;
-    }
+  .div7 {
+    flex-direction: column-reverse;
+  }
 
-    .div10 .year-text{
-      padding: 0 1.2rem;
-    }
+  /* STAT CARDS */
+  .div8 {
+    height: 100px;
+  }
 
-    .grad-line2, .grad-line3{
-      display: none;
-    }
+  .div9,
+  .div10 {
+    min-height: 220px;
+  }
+
+  /* TEXT FIX */
+  .year-text {
+    position: absolute;
+    inset: 0;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+  }
+
+  .year-text h1 {
+    font-size: 2.5rem !important;
+  }
+
+  .year-text h4 {
+    font-size: 1rem !important;
+  }
+
+  .year-text p {
+    font-size: 0.9rem !important;
+  }
+
+  /* MARQUEE */
+  .marq-total {
+    position: relative;
+    margin-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .grad-line2{
+    visibility: hidden;
+    display: none;
+  }
 }
-
-.count-up{
-  display: inline-block;
-}
-
-
-
 
 
 .grad-line3{
@@ -452,6 +373,6 @@
   width:90%;
     padding:0.5px;
     position:absolute;
-    top:-3rem;
+    top:-1rem;
     background:linear-gradient(to right, black, white, black);
 }
