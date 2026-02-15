@@ -418,6 +418,14 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 })
 
+const closeBtn = document.getElementById("closeModal");
+
+if (closeBtn) {
+  closeBtn.addEventListener("click", function() {
+    modal.classList.remove("active");
+  });
+}
+
     .catch(error => {
       alert("Error occurred.");
       modal.classList.remove("active");
