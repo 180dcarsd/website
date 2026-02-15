@@ -430,3 +430,21 @@ a:focus,
 @keyframes drawCheck {
   to { stroke-dashoffset: 0; }
 }
+
+/* ===== BUTTON ===== */
+
+.modal-btn {
+  margin-top: 1.4rem;
+  padding: 0.6rem 1.5rem;
+  background: #83bc3d;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.modal-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
