@@ -427,3 +427,27 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
 });
+
+
+
+const contactForms = document.querySelectorAll(".contactForm");
+
+contactForms.forEach(form => {
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const data = new FormData(form);
+
+    fetch(form.action, {
+      method: "POST",
+      body: data
+    })
+    .then(res => res.json())
+    .then(() => {
+      alert("Message sent successfully.");
+      form.reset();
+    })
+    .catch(() => alert("Error occurred."));
+  });
+});
+
