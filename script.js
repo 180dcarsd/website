@@ -418,6 +418,12 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 })
 
+    .catch(error => {
+      alert("Error occurred.");
+      modal.classList.remove("active");
+    });
+  });
+    
 const closeBtn = document.getElementById("closeModal");
 
 if (closeBtn) {
@@ -425,11 +431,5 @@ if (closeBtn) {
     modal.classList.remove("active");
   });
 }
-
-    .catch(error => {
-      alert("Error occurred.");
-      modal.classList.remove("active");
-    });
-  });
 
 });
