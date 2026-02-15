@@ -378,14 +378,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const form = document.getElementById("newsletterForm");
   const modal = document.getElementById("successModal");
-  const closeBtn = document.getElementById("closeModal");
+  const loadingState = document.getElementById("modalLoading");
+  const successState = document.getElementById("modalSuccess");
 
-  if (!form) return; // prevents errors if form not found
+  if (!form) return;
 
   form.addEventListener("submit", function(e) {
     e.preventDefault();
 
     const data = new FormData(form);
+
+    // Open modal instantly
+    modal.classList.add("active");
+
+    // Ensure loading is visible
+    loadingState.classList.remove("hidden");
+    successState.classList.add("hidden");
 
     fetch(form.action, {
       method: "POST",
@@ -393,24 +401,19 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .then(response => {
       if (response.ok) {
-        modal.classList.add("active");
+        // Switch to success state
+        loadingState.classList.add("hidden");
+        successState.classList.remove("hidden");
         form.reset();
       } else {
-        alert("Submission failed. Try again.");
+        alert("Submission failed.");
+        modal.classList.remove("active");
       }
     })
     .catch(error => {
-      console.error(error);
       alert("Error occurred.");
+      modal.classList.remove("active");
     });
   });
 
-  if (closeBtn) {
-    closeBtn.addEventListener("click", function() {
-      modal.classList.remove("active");
-    });
-  }
-
 });
-
-
