@@ -400,16 +400,24 @@ document.addEventListener("DOMContentLoaded", function() {
       body: data,
     })
     .then(response => {
-      if (response.ok) {
-        // Switch to success state
-        loadingState.classList.add("hidden");
-        successState.classList.remove("hidden");
-        form.reset();
-      } else {
-        alert("Submission failed.");
-        modal.classList.remove("active");
-      }
-    })
+  if (response.ok) {
+
+    // Switch to success state
+    loadingState.classList.add("hidden");
+    successState.classList.remove("hidden");
+    form.reset();
+
+    // Auto close after 3 seconds
+    setTimeout(() => {
+      modal.classList.remove("active");
+    }, 3000);
+
+  } else {
+    alert("Submission failed.");
+    modal.classList.remove("active");
+  }
+})
+
     .catch(error => {
       alert("Error occurred.");
       modal.classList.remove("active");
