@@ -1,0 +1,30 @@
+<section class="contact-section">
+  <div class="contact-container">
+    <h1>Let’s Build Something Impactful.</h1>
+    <p>Reach out to collaborate, partner, or discuss consulting opportunities.</p>
+
+    <form class="contactForm" method="POST"
+      action="YOUR_APPS_SCRIPT_URL">
+
+      <input type="hidden" name="Type" value="Client Inquiry">
+
+      <div class="input-group">
+        <input type="text" name="Name" placeholder="Your Name" required>
+      </div>
+
+      <div class="input-group">
+        <input type="email" name="Email" placeholder="Your Email" required>
+      </div>
+
+      <div class="input-group">
+        <textarea name="Message" rows="4"
+          placeholder="Tell us about your organization or project..."
+          required></textarea>
+      </div>
+
+      <button type="submit" class="contact-btn">
+        Send Message →
+      </button>
+    </form>
+  </div>
+</section>
