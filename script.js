@@ -373,17 +373,3 @@ counters.forEach(counter => {
   counterObserver.observe(counter);
 });
 
-
-
-document.getElementById('subscribe-button').addEventListener('click', function() {
-  const emailInput = document.getElementById('email-input').value;
-  
-  fetch('https://hooks.zapier.com/hooks/catch/26459093/uevcrov/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: emailInput })
-  })
-  .then(response => alert('✅ Subscription confirmed! Check your email.'))
-  .catch(error => console.error('Error:', error));
-});
-
