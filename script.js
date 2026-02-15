@@ -1,3 +1,5 @@
+console.log("script loaded");
+
 const cursor = document.querySelector('.glowing-cursor');
 
 document.addEventListener('mousemove', (e) => {
