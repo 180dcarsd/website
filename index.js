@@ -69,3 +69,43 @@ modelViewer.addEventListener('load', () => {
 });
 
 
+// newsletter thing
+document.addEventListener("DOMContentLoaded", function() {
+
+  const form = document.getElementById("newsletterForm");
+  const modal = document.getElementById("successModal");
+  const closeBtn = document.getElementById("closeModal");
+
+  if (!form) return; // prevents errors if form not found
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const data = new FormData(form);
+
+    fetch(form.action, {
+      method: "POST",
+      body: data,
+    })
+    .then(response => {
+      if (response.ok) {
+        modal.classList.add("active");
+        form.reset();
+      } else {
+        alert("Submission failed. Try again.");
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      alert("Error occurred.");
+    });
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", function() {
+      modal.classList.remove("active");
+    });
+  }
+
+});
+
