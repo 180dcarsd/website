@@ -378,60 +378,52 @@ counters.forEach(counter => {
 // newsletter thing
 document.addEventListener("DOMContentLoaded", function() {
 
-  const form = document.getElementById("newsletterForm");
-  const modal = document.getElementById("successModal");
-  const loadingState = document.getElementById("modalLoading");
-  const successState = document.getElementById("modalSuccess");
+  const forms = document.querySelectorAll("#newsletterForm");
 
-  if (!form) return;
+  if (!forms.length) return;
 
-  form.addEventListener("submit", function(e) {
-    e.preventDefault();
+  forms.forEach(form => {
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
 
-    const data = new FormData(form);
+      const modal = document.getElementById("successModal");
+      const loadingState = document.getElementById("modalLoading");
+      const successState = document.getElementById("modalSuccess");
 
-    // Open modal instantly
-    modal.classList.add("active");
+      if (!modal || !loadingState || !successState) {
+        console.error("Modal elements missing");
+        return;
+      }
 
-    // Ensure loading is visible
-    loadingState.classList.remove("hidden");
-    successState.classList.add("hidden");
+      modal.classList.add("active");
+      loadingState.classList.remove("hidden");
+      successState.classList.add("hidden");
 
-    fetch(form.action, {
-      method: "POST",
-      body: data,
-    })
-    .then(response => {
-  if (response.ok) {
+      const data = new FormData(form);
 
-    // Switch to success state
-    loadingState.classList.add("hidden");
-    successState.classList.remove("hidden");
-    form.reset();
+      fetch(form.action, {
+        method: "POST",
+        body: data,
+      })
+      .then(response => {
+        if (response.ok) {
+          loadingState.classList.add("hidden");
+          successState.classList.remove("hidden");
+          form.reset();
 
-    // Auto close after 3 seconds
-    setTimeout(() => {
-      modal.classList.remove("active");
-    }, 3000);
-
-  } else {
-    alert("Submission failed.");
-    modal.classList.remove("active");
-  }
-})
-
-    .catch(error => {
-      alert("Error occurred.");
-      modal.classList.remove("active");
+          setTimeout(() => {
+            modal.classList.remove("active");
+          }, 3000);
+        } else {
+          modal.classList.remove("active");
+          alert("Submission failed.");
+        }
+      })
+      .catch(() => {
+        modal.classList.remove("active");
+        alert("Error occurred.");
+      });
     });
   });
-    
-const closeBtn = document.getElementById("closeModal");
-
-if (closeBtn) {
-  closeBtn.addEventListener("click", function() {
-    modal.classList.remove("active");
-  });
-}
 
 });
