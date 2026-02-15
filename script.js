@@ -375,57 +375,5 @@ counters.forEach(counter => {
 
 
 
-// newsletter thing
-document.addEventListener("DOMContentLoaded", function() {
-
-  const forms = document.querySelectorAll("#newsletterForm");
-
-  if (!forms.length) return;
-
-  forms.forEach(form => {
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const modal = document.getElementById("successModal");
-      const loadingState = document.getElementById("modalLoading");
-      const successState = document.getElementById("modalSuccess");
-
-      if (!modal || !loadingState || !successState) {
-        console.error("Modal elements missing");
-        return;
-      }
-
-      modal.classList.add("active");
-      loadingState.classList.remove("hidden");
-      successState.classList.add("hidden");
-
-      const data = new FormData(form);
-
-      fetch(form.action, {
-        method: "POST",
-        body: data,
-      })
-      .then(response => {
-        if (response.ok) {
-          loadingState.classList.add("hidden");
-          successState.classList.remove("hidden");
-          form.reset();
-
-          setTimeout(() => {
-            modal.classList.remove("active");
-          }, 3000);
-        } else {
-          modal.classList.remove("active");
-          alert("Submission failed.");
-        }
-      })
-      .catch(() => {
-        modal.classList.remove("active");
-        alert("Error occurred.");
-      });
-    });
-  });
-
-});
 
 
