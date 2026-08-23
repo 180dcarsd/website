@@ -223,6 +223,23 @@ a:focus,
     black
   );
 }
+/*electric blue*/
+.g7::before {
+  background: linear-gradient(
+    to bottom,
+    #7DF9FF,
+    black
+  );
+}
+
+/*slate*/
+.g8::before {
+  background: linear-gradient(
+    to bottom,
+    #5E6B7A,
+    black
+  );
+}
 
 .proj-wrap a{
   text-decoration: none;
