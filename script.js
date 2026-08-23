@@ -90,47 +90,100 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const team = [
     {
-      img: "./assets/img/M1.webp",
-      quote: "Meticulous perfectionist always two steps ahead, double-checking every detail to ensure 180DC runs flawlessly end to end.",
-      role: "President",
-      name: "Vatsal Sarawagi"
-    },
-    {
-      img: "./assets/img/M2.webp",
-      quote: "Calm, mature, and effortlessly chill leader who stays composed under pressure and turns tense situations into ease.",
-      role: "Vice-President",
-      name: "Siddhant Gopalka"
-    },
-    {
-      img: "./assets/img/Hey.webp",
-      quote: "Warm, approachable, and universally loved, she embodies the spirit of 180DC and makes every room brighter.",
-      role: "General Secretary",
-      name: "Garima Ahuja"
-    },
-    {
-      img: "./assets/img/M4.webp",
-      quote: "Knowledgeable and thoughtful voice, always ready with constructive insights, balancing logic, clarity, and genuine care.",
-      role: "Consulting Director",
-      name: "Divisha"
-    },
-    {
-      img: "./assets/img/M5.webp",
-      quote: "Unpredictably creative yet reliable, he brings bold ideas, punctual execution, and relentless commitment until every task is complete.",
-      role: "Marketing Director",
-      name: "Bhavye Gattani"
-    },
-    {
-      img: "./assets/img/M6.webp",
-      quote: "Quiet yet confident, he builds instant client trust through professionalism, warmth, and a consistently positive presence.",
-      role: "Client Acquisition Director",
-      name: "Deepanshu"
-    },
-    {
-      img: "./assets/img/M7.webp",
-      quote: "Operations Director with strong domain knowledge and valuable connections, ensuring smooth execution and scalable organisational growth.",
-      role: "Operations Director",
-      name: "Kush Singla"
-    }
+  img: "./assets/img/M1.webp",
+  quote: "Meticulous perfectionist always two steps ahead, double-checking every detail to ensure 180DC runs flawlessly end to end.",
+  role: "President",
+  name: "Divisha Gupta"
+},
+{
+  img: "./assets/img/sam.png",
+  quote: "Calm, mature, and effortlessly chill leader who stays composed under pressure and turns tense situations into ease.",
+  role: "Vice-President",
+  name: "Samridhi Dobriyal"
+},
+{
+  img: "./assets/img/bhu.png",
+  quote: "Warm, approachable, and universally loved, they embody the spirit of 180DC and make every room brighter.",
+  role: "General Secretary",
+  name: "Bhupesh Falwaria"
+},
+{
+  img: "./assets/img/avish.png",
+  quote: "Insightful and dependable advisor, combining experience, clarity, and a steady presence to help 180DC navigate bigger decisions.",
+  role: "Advisory",
+  name: "Avish Katiyar"
+},
+      
+{
+  img: "./assets/img/mur.png",
+  quote: "Strategic and composed, bringing seasoned perspective, sharp judgment, and thoughtful guidance whenever the organisation needs direction.",
+  role: "Advisory",
+  name: "Raaghav Murada"
+},
+
+{
+  img: "./assets/img/par.png",
+  quote: "Operations Director with strong domain knowledge and valuable connections, ensuring smooth execution and scalable organisational growth.",
+  role: "Client Acquisition Director",
+  name: "Parissha Tyagi"
+},
+{
+  img: "./assets/img/gad.png",
+  quote: "Confident relationship-builder who turns conversations into opportunities, bringing persistence, professionalism, and a sharp instinct for client needs.",
+  role: "Client Acquisition Director",
+  name: "Raghav Gadhyan"
+},
+
+{
+  img: "./assets/img/ahu.png",
+  quote: "Unpredictably creative yet reliable, bringing bold ideas, punctual execution, and relentless commitment until every task is complete.",
+  role: "Consulting Director",
+  name: "Gauri Ahuja"
+},
+{
+  img: "./assets/img/shrey.png",
+  quote: "Most knowledgeable consultant with thoughtful voice. Stark's always ready with constructive insights, balancing logic, clarity, and genuine care.",
+  role: "Consulting Director",
+  name: "Shreyansh Tiwari"
+},
+{
+  img: "./assets/img/das.png",
+  quote: "Quiet yet confident, building instant client trust through professionalism, warmth, and a consistently positive presence.",
+  role: "Deputy Consulting Director",
+  name: "Aditya Dasgupta"
+},
+
+{
+  img: "./assets/img/man.png",
+  quote: "Energetic problem-solver who keeps the moving parts aligned, turning operational challenges into smooth execution with precision.",
+  role: "Operations Director",
+  name: "Aayush Mandal"
+},
+{
+  img: "./assets/img/neer.png",
+  quote: "Calm and systematic, keeping teams organised, deadlines visible, and execution moving forward without unnecessary friction.",
+  role: "Operations Director",
+  name: "Neeraj Sharma"
+},
+{
+  img: "./assets/img/raj.png",
+  quote: "Reliable and detail-oriented, bringing structure to complex workflows while ensuring every operational commitment is followed through.",
+  role: "Deputy Operations Director",
+  name: "Ananya Raj"
+},
+
+{
+  img: "./assets/img/gar.png",
+  quote: "Creative and trend-aware, bringing fresh ideas, sharp instincts, and consistent energy to make 180DC impossible to overlook.",
+  role: "Marketing Director",
+  name: "Garvit Anand"
+},
+{
+  img: "./assets/img/div.png",
+  quote: "Bold communicator with a strong eye for storytelling, turning ideas into engaging campaigns that strengthen 180DC's presence.",
+  role: "Marketing Director",
+  name: "Divyansh Kumar"
+}
   ];
 
   let index = 0;
