@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const team = [
     {
-      img: "./assets/img/M1.webp",
+      img: "./assets/img/M4.webp",
       quote: "Meticulous perfectionist always two steps ahead, double-checking every detail to ensure 180DC runs flawlessly end to end.",
       role: "President",
       name: "Divisha Gupta"
