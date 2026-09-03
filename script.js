@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const team = [
     {
-      img: "./assets/img/M4.webp",
+      img: "./assets/img/divisha.png",
       quote: "Meticulous perfectionist always two steps ahead, double-checking every detail to ensure 180DC runs flawlessly end to end.",
       role: "President",
       name: "Divisha Gupta"
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       img: "./assets/img/par.png",
-      quote: "Operations Director with strong domain knowledge and valuable connections, ensuring smooth execution and scalable organisational growth.",
+      quote: "Strong domain knowledge and valuable connections, ensuring smooth execution and scalable organisational growth.",
       role: "Client Acquisition Director",
       name: "Parissha Tyagi"
     },
@@ -141,14 +141,14 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       img: "./assets/img/shrey.png",
-      quote: "Most knowledgeable consultant with thoughtful voice. Stark's always ready with constructive insights, balancing logic, clarity, and genuine care.",
+      quote: "The knowledgeable consultant with thoughtful voice. Shrey's always ready with constructive insights, balancing logic, clarity, and genuine care.",
       role: "Consulting Director",
       name: "Shreyansh Tiwari"
     },
     {
       img: "./assets/img/das.png",
       quote: "Quiet yet confident, building instant client trust through professionalism, warmth, and a consistently positive presence.",
-      role: "Deputy Consulting Director",
+      role: "Consulting Director",
       name: "Aditya Dasgupta"
     },
     
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       img: "./assets/img/raj.png",
       quote: "Reliable and detail-oriented, bringing structure to complex workflows while ensuring every operational commitment is followed through.",
-      role: "Deputy Operations Director",
+      role: "Operations Director",
       name: "Ananya Raj"
     },
     {
