@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ================= TEAM CAROUSEL (FINAL WORKING VERSION) ================= */
 /* ================= TEAM CAROUSEL (FINAL STABLE VERSION) ================= */
 
-  const team = [
+  const team = (window.CONTENT && window.CONTENT.team) || [
     {
       img: "./assets/img/divisha.png",
       quote: "Meticulous perfectionist always two steps ahead, double-checking every detail to ensure 180DC runs flawlessly end to end.",

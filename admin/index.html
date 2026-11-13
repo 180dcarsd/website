@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin · 180DC ARSD</title>
+<style>
+:root{--bg:#0b0b0c;--panel:#151517;--line:#2a2a2e;--text:#ececec;--mute:#9a9aa2;--green:#83bc3d;--red:#e5534b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:#1f1f23;border-radius:8px;padding:.5rem .9rem}
+button:hover{border-color:#444}
+button.go{background:var(--green);border-color:var(--green);color:#10150a;font-weight:600}
+button.go:disabled{opacity:.5;cursor:default}
+button.x{color:var(--red)}
+input[type=text],input[type=password],input[type=url],textarea,select{width:100%;background:#0f0f11;border:1px solid var(--line);border-radius:8px;padding:.55rem .7rem}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--green);outline-offset:-1px}
+textarea{min-height:90px;resize:vertical}
+label{display:block;font-size:.8rem;color:var(--mute);margin:.9rem 0 .3rem}
+.hide{display:none!important}
+
+#login{max-width:340px;margin:18vh auto;padding:0 1rem}
+#login h1{font-size:1.3rem;margin:0 0 .3rem}
+#login p{color:var(--mute);margin:0 0 1rem}
+#login button{width:100%;margin-top:1.2rem}
+#err{color:var(--red);margin-top:.8rem;min-height:1.2em}
+
+header{position:sticky;top:0;z-index:5;background:rgba(11,11,12,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{max-width:880px;margin:auto;padding:.7rem 1rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.bar b{margin-right:auto}
+#msg{font-size:.85rem;color:var(--mute)}
+#msg.ok{color:var(--green)} #msg.bad{color:var(--red)}
+nav{max-width:880px;margin:auto;padding:0 1rem .7rem;display:flex;gap:.4rem;flex-wrap:wrap}
+nav button.on{background:var(--green);border-color:var(--green);color:#10150a}
+main{max-width:880px;margin:1rem auto 6rem;padding:0 1rem}
+.hint{color:var(--mute);font-size:.85rem;margin:.2rem 0 1rem}
+.item{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-bottom:.7rem;overflow:hidden}
+.head{display:flex;align-items:center;gap:.7rem;padding:.6rem .8rem;cursor:pointer}
+.head img{width:44px;height:44px;object-fit:cover;border-radius:8px;background:#000;flex:none}
+.head span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.head button{padding:.25rem .55rem}
+.body{padding:0 1rem 1rem;border-top:1px solid var(--line)}
+.pic{display:flex;gap:.8rem;align-items:center}
+.pic img{width:96px;height:96px;object-fit:cover;border-radius:10px;background:#000}
+.pic.wide img{width:160px;height:96px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:.6rem}
+.grid div{position:relative}
+.grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;background:#000;display:block}
+.grid .t{position:absolute;right:3px;top:3px;display:flex;gap:2px}
+.grid .t button{padding:0 .4rem;font-size:.8rem;background:rgba(0,0,0,.75)}
+.sw{display:inline-block;width:.9rem;height:.9rem;border-radius:3px;vertical-align:-2px;margin-right:.4rem}
+.add{width:100%;border-style:dashed;margin:.3rem 0 1rem}
+</style>
+</head>
+<body>
+
+<div id="login">
+  <h1>Admin</h1>
+  <p>180 Degrees Consulting ARSD</p>
+  <label for="uid">ID</label>
+  <input id="uid" type="text" autocomplete="username" autocapitalize="off">
+  <label for="pw">Password</label>
+  <input id="pw" type="password" autocomplete="current-password">
+  <button class="go" id="enter">Log in</button>
+  <div id="err"></div>
+</div>
+
+<div id="app" class="hide">
+  <header>
+    <div class="bar">
+      <b>Site editor</b>
+      <span id="msg"></span>
+      <button id="out">Log out</button>
+      <button class="go" id="save" disabled>Save &amp; publish</button>
+    </div>
+    <nav id="tabs"></nav>
+  </header>
+  <main id="main"></main>
+</div>
+
+<script src="./config.js"></script>
+<script>
+(function () {
+'use strict';
+var CFG = window.CMS_CONFIG, TOKEN = null, DATA = null, pending = {}, dirty = false, cur = 'publications', open = {}, idle;
+var $ = function (id) { return document.getElementById(id); };
+
+/* ---------- what can be edited ---------- */
+var PUB_COLORS = { g1: ['Wine', '#82344d'], g2: ['Teal', '#002e28'], g3: ['Maroon', '#3d0002'], g4: ['Navy', '#001030'], g5: ['Purple', '#62027d'], g6: ['Brown', '#562d1e'], g7: ['Electric blue', '#7DF9FF'], g8: ['Slate', '#5E6B7A'] };
+var CLI_COLORS = { blue: ['Blue', '#2c2c5d'], dblue: ['Light indigo', '#444378'], trust: ['Indigo', '#2e2d53'], pink: ['Pink', '#da95b3'], white: ['Grey', '#bebebe'], red: ['Red', '#733837'], violet: ['Violet', '#330830'], orange: ['Orange', '#cc2d04'], ddblue: ['Deep blue', '#020256'], green: ['Green', '#07362f'], dpink: ['Dark pink', '#4d132d'] };
+
+var SECTIONS = {
+  publications: { label: 'Publications', hint: 'Shown on the home page and R&D. Leave the link empty for a "Coming soon" card.', list: true, add: 'Add publication',
+    blank: { color: 'g1', image: '', tag: 'RESEARCH REPORT', title: '', text: '', button: 'Explore', link: '' },
+    title: function (x) { return x.title || 'New publication'; }, thumb: 'image',
+    fields: [['image', 'Cover image', 'image', 900], ['tag', 'Small heading (e.g. RESEARCH REPORT)', 'text'], ['title', 'Title', 'text'], ['text', 'Description', 'area'], ['button', 'Button text', 'text'], ['link', 'Link (leave empty for none)', 'url'], ['color', 'Hover colour', 'select', PUB_COLORS]] },
+  team: { label: 'Team', hint: 'The rotating team carousel on the home page. Use a cut-out photo like the existing ones.', list: true, add: 'Add member',
+    blank: { img: '', name: '', role: '', quote: '' },
+    title: function (x) { return (x.name || 'New member') + (x.role ? ' · ' + x.role : ''); }, thumb: 'img',
+    fields: [['img', 'Photo', 'image', 800], ['name', 'Name', 'text'], ['role', 'Role', 'text'], ['quote', 'Quote', 'area']] },
+  clients: { label: 'Clients', hint: 'Cards on the Clients page, three per row.', list: true, add: 'Add client',
+    blank: { color: 'blue', logo: '', text: '' },
+    title: function (x) { return (x.text || 'New client').slice(0, 60); }, thumb: 'logo',
+    fields: [['logo', 'Logo', 'image', 700], ['text', 'Description (shows on hover)', 'area'], ['color', 'Hover colour', 'select', CLI_COLORS]] },
+  events: { label: 'Events', hint: 'Each event gets a banner, a title, a write-up and a photo strip.', list: true, add: 'Add event',
+    blank: { banner: '', titleGreen: '', titleRest: '', text: '', images: [] },
+    title: function (x) { return (x.titleGreen || 'New event') + (x.titleRest || ''); }, thumb: 'banner',
+    fields: [['banner', 'Banner image (wide)', 'image', 1800, 'wide'], ['titleGreen', 'Title, green part (e.g. Odyssey 180\')', 'text'], ['titleRest', 'Title, white part (e.g. 25)', 'text'], ['text', 'Write-up', 'area'], ['images', 'Photos', 'images', 1400]] },
+  site: { label: 'Contact & footer', hint: 'Appears in the footer of every page.', list: false,
+    fields: [['email', 'Contact email', 'text'], ['whatsapp', 'WhatsApp link', 'url'], ['instagram', 'Instagram link', 'url'], ['linkedin', 'LinkedIn link', 'url'], ['contactText', 'Contact blurb', 'area'], ['mailText', 'Email button text', 'text'], ['newsletterText', 'Mailing list blurb', 'area']] }
+};
+
+/* ---------- helpers ---------- */
+function h(tag, attrs) {
+  var el = document.createElement(tag);
+  for (var k in (attrs || {})) { if (k === 'text') el.textContent = attrs[k]; else if (k.slice(0, 2) === 'on') el[k] = attrs[k]; else el.setAttribute(k, attrs[k]); }
+  for (var i = 2; i < arguments.length; i++) if (arguments[i]) el.appendChild(arguments[i]);
+  return el;
+}
+function say(t, cls) { var m = $('msg'); m.textContent = t || ''; m.className = cls || ''; }
+function setDirty(d) { dirty = d; $('save').disabled = !d; if (d) say('Unsaved changes'); }
+function b64d(s) { var b = atob(s), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+function bytesToB64(b) { var s = ''; for (var i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(s); }
+function textToB64(t) { return bytesToB64(new TextEncoder().encode(t)); }
+function b64ToText(s) { return new TextDecoder().decode(b64d(s.replace(/\s/g, ''))); }
+function previewSrc(p) { if (!p) return ''; if (pending[p]) return pending[p].dataUrl; return /^https?:/.test(p) ? p : encodeURI('../' + p.replace(/^\.\//, '')); }
+
+/* ---------- login: the token is stored encrypted; ID + password unlock it ---------- */
+function unlock(id, pw) {
+  var enc = new TextEncoder();
+  return crypto.subtle.importKey('raw', enc.encode(id.trim() + ':' + pw), 'PBKDF2', false, ['deriveKey'])
+    .then(function (km) { return crypto.subtle.deriveKey({ name: 'PBKDF2', salt: b64d(CFG.salt), iterations: CFG.iter, hash: 'SHA-256' }, km, { name: 'AES-GCM', length: 256 }, false, ['decrypt']); })
+    .then(function (key) { return crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64d(CFG.iv) }, key, b64d(CFG.ct)); })
+    .then(function (pt) { return JSON.parse(new TextDecoder().decode(pt)).token; });
+}
+function login() {
+  if (!CFG || !CFG.ct) { $('err').textContent = 'Not set up yet. Run admin/setup.html first.'; return; }
+  $('err').textContent = ''; $('enter').disabled = true; $('enter').textContent = 'Checking…';
+  unlock($('uid').value, $('pw').value).then(function (t) {
+    TOKEN = t; $('pw').value = '';
+    return load();
+  }).then(function () {
+    $('login').classList.add('hide'); $('app').classList.remove('hide'); tabs(); render(); bump();
+  }).catch(function (e) {
+    TOKEN = null;
+    $('err').textContent = (e && e.gh) ? 'Logged in, but GitHub said: ' + e.message : 'Wrong ID or password.';
+  }).then(function () { $('enter').disabled = false; $('enter').textContent = 'Log in'; });
+}
+function logout() { if (dirty && !confirm('Discard unsaved changes?')) return; dirty = false; location.reload(); }
+function bump() { clearTimeout(idle); idle = setTimeout(function () { if (!dirty) location.reload(); else bump(); }, 30 * 60 * 1000); }
+document.addEventListener('click', function () { if (TOKEN) bump(); });
+
+/* ---------- GitHub ---------- */
+function gh(path, opt) {
+  opt = opt || {};
+  return fetch('https://api.github.com/repos/' + CFG.owner + '/' + CFG.repo + '/' + path, {
+    method: opt.method || 'GET', cache: 'no-store', body: opt.body ? JSON.stringify(opt.body) : undefined,
+    headers: { Authorization: 'Bearer ' + TOKEN, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' }
+  }).then(function (r) {
+    return r.json().catch(function () { return {}; }).then(function (j) {
+      if (!r.ok) { var e = new Error(j.message || ('HTTP ' + r.status)); e.gh = true; throw e; }
+      return j;
+    });
+  });
+}
+function load() {
+  return gh('contents/content/content.js?ref=' + encodeURIComponent(CFG.branch)).then(function (j) {
+    var t = b64ToText(j.content).replace(/^\s*window\.CONTENT\s*=\s*/, '').replace(/;\s*$/, '');
+    DATA = JSON.parse(t);
+  });
+}
+function save() {
+  var b = $('save'); b.disabled = true; say('Saving…');
+  var json = JSON.stringify(DATA), paths = Object.keys(pending).filter(function (p) { return json.indexOf(JSON.stringify(p).slice(1, -1)) > -1; });
+  var chain = Promise.resolve();
+  paths.forEach(function (p, i) {
+    chain = chain.then(function () {
+      say('Uploading image ' + (i + 1) + ' of ' + paths.length + '…');
+      return gh('contents/' + p.replace(/^\.\//, ''), { method: 'PUT', body: { message: 'Admin: add image', content: pending[p].b64, branch: CFG.branch } });
+    });
+  });
+  chain.then(function () {
+    say('Saving content…');
+    return gh('contents/content/content.js?ref=' + encodeURIComponent(CFG.branch));
+  }).then(function (cur) {
+    return gh('contents/content/content.js', { method: 'PUT', body: { message: 'Admin: update content', content: textToB64('window.CONTENT = ' + JSON.stringify(DATA, null, 1) + ';\n'), sha: cur.sha, branch: CFG.branch } });
+  }).then(function () {
+    pending = {}; dirty = false; say('Saved. It goes live in about a minute.', 'ok');
+  }).catch(function (e) { say('Save failed: ' + e.message, 'bad'); b.disabled = false; });
+}
+
+/* ---------- images: shrink + convert to webp in the browser ---------- */
+function processImage(file, max) {
+  return createImageBitmap(file).then(function (bmp) {
+    var s = Math.min(1, max / Math.max(bmp.width, bmp.height)), c = document.createElement('canvas');
+    c.width = Math.round(bmp.width * s); c.height = Math.round(bmp.height * s);
+    c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+    return new Promise(function (res) { c.toBlob(res, 'image/webp', 0.82); });
+  }).then(function (blob) {
+    return blob.arrayBuffer().then(function (buf) {
+      var ext = blob.type === 'image/webp' ? 'webp' : blob.type === 'image/jpeg' ? 'jpg' : 'png';
+      var path = './assets/img/uploads/' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6) + '.' + ext;
+      pending[path] = { b64: bytesToB64(new Uint8Array(buf)), dataUrl: URL.createObjectURL(blob) };
+      return path;
+    });
+  });
+}
+
+/* ---------- screens ---------- */
+function tabs() {
+  var n = $('tabs'); n.textContent = '';
+  Object.keys(SECTIONS).forEach(function (k) {
+    n.appendChild(h('button', { text: SECTIONS[k].label, class: k === cur ? 'on' : '', onclick: function () { cur = k; open = {}; tabs(); render(); } }));
+  });
+}
+function render() {
+  var S = SECTIONS[cur], m = $('main'); m.textContent = '';
+  m.appendChild(h('p', { class: 'hint', text: S.hint }));
+  if (!S.list) { var box = h('div', { class: 'item' }), body = h('div', { class: 'body' }); box.appendChild(body); fields(body, S, DATA[cur]); m.appendChild(box); return; }
+  var arr = DATA[cur];
+  m.appendChild(h('button', { class: 'add', text: '+ ' + S.add, onclick: function () { arr.unshift(JSON.parse(JSON.stringify(S.blank))); open = { 0: 1 }; setDirty(true); render(); } }));
+  arr.forEach(function (it, i) {
+    var title = h('span', { text: S.title(it) });
+    var thumb = h('img', { src: previewSrc(it[S.thumb]) });
+    var body = h('div', { class: 'body' + (open[i] ? '' : ' hide') });
+    var head = h('div', { class: 'head', onclick: function () { open[i] = !open[i]; body.classList.toggle('hide'); } },
+      thumb, title,
+      h('button', { text: '↑', title: 'Move up', onclick: function (e) { e.stopPropagation(); move(arr, i, -1); } }),
+      h('button', { text: '↓', title: 'Move down', onclick: function (e) { e.stopPropagation(); move(arr, i, 1); } }),
+      h('button', { text: 'Delete', class: 'x', onclick: function (e) { e.stopPropagation(); if (confirm('Delete "' + S.title(it) + '"?')) { arr.splice(i, 1); open = {}; setDirty(true); render(); } } }));
+    fields(body, S, it, function () { title.textContent = S.title(it); thumb.src = previewSrc(it[S.thumb]); });
+    m.appendChild(h('div', { class: 'item' }, head, body));
+  });
+}
+function move(arr, i, d) { var j = i + d; if (j < 0 || j >= arr.length) return; var t = arr[i]; arr[i] = arr[j]; arr[j] = t; open = {}; open[j] = 1; setDirty(true); render(); }
+
+function fields(body, S, obj, onchange) {
+  onchange = onchange || function () {};
+  S.fields.forEach(function (f) {
+    var key = f[0], type = f[2], el;
+    body.appendChild(h('label', { text: f[1] }));
+    if (type === 'text' || type === 'url') {
+      el = h('input', { type: 'text' }); el.value = obj[key] || '';
+      el.oninput = function () { obj[key] = el.value; setDirty(true); onchange(); };
+      body.appendChild(el);
+    } else if (type === 'area') {
+      el = h('textarea'); el.value = obj[key] || '';
+      el.oninput = function () { obj[key] = el.value; setDirty(true); onchange(); };
+      body.appendChild(el);
+    } else if (type === 'select') {
+      el = h('select'); var opts = f[3];
+      Object.keys(opts).forEach(function (k) { el.appendChild(h('option', { value: k, text: opts[k][0] + '  ' + opts[k][1] })); });
+      el.value = obj[key] in opts ? obj[key] : Object.keys(opts)[0];
+      el.onchange = function () { obj[key] = el.value; setDirty(true); };
+      body.appendChild(el);
+    } else if (type === 'image') {
+      var img = h('img', { src: previewSrc(obj[key]) }), file = h('input', { type: 'file', accept: 'image/*' });
+      file.onchange = function () {
+        if (!file.files[0]) return; say('Preparing image…');
+        processImage(file.files[0], f[3]).then(function (p) { obj[key] = p; img.src = previewSrc(p); setDirty(true); onchange(); })
+          .catch(function () { say('Could not read that image.', 'bad'); });
+      };
+      body.appendChild(h('div', { class: 'pic ' + (f[4] || '') }, img, file));
+    } else if (type === 'images') {
+      var grid = h('div', { class: 'grid' }), arr = obj[key] = obj[key] || [];
+      var draw = function () {
+        grid.textContent = '';
+        arr.forEach(function (p, i) {
+          grid.appendChild(h('div', {}, h('img', { src: previewSrc(p) }),
+            h('span', { class: 't' },
+              h('button', { text: '‹', onclick: function () { if (i) { var t = arr[i]; arr[i] = arr[i - 1]; arr[i - 1] = t; setDirty(true); draw(); } } }),
+              h('button', { text: '›', onclick: function () { if (i < arr.length - 1) { var t = arr[i]; arr[i] = arr[i + 1]; arr[i + 1] = t; setDirty(true); draw(); } } }),
+              h('button', { text: '✕', class: 'x', onclick: function () { arr.splice(i, 1); setDirty(true); draw(); } }))));
+        });
+      };
+      var multi = h('input', { type: 'file', accept: 'image/*', multiple: 'multiple' });
+      multi.onchange = function () {
+        var fs = Array.prototype.slice.call(multi.files), chain = Promise.resolve(); say('Preparing images…');
+        fs.forEach(function (fl) { chain = chain.then(function () { return processImage(fl, f[3]).then(function (p) { arr.push(p); }); }); });
+        chain.then(function () { setDirty(true); draw(); multi.value = ''; });
+      };
+      draw(); body.appendChild(grid); body.appendChild(h('label', { text: 'Add photos' })); body.appendChild(multi);
+    }
+  });
+}
+
+$('enter').onclick = login;
+$('pw').onkeydown = $('uid').onkeydown = function (e) { if (e.key === 'Enter') login(); };
+$('save').onclick = save;
+$('out').onclick = logout;
+window.onbeforeunload = function () { return dirty ? 'Unsaved changes' : undefined; };
+})();
+</script>
+</body>
+</html>
